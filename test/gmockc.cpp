@@ -1,4 +1,4 @@
-#include <memory> /* for gcc 4.9.2 */
+#include <memory> /* for gcc 4.9.2, also have to define -std=c++11 */
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -8,30 +8,41 @@
 
 using namespace ::testing;
 
-/* according GMock requirement to declare the mock function   */
+/**
+ * XDevMock
+ * GMock macro to define the mock API 
+ *
+ * MOCK_METHOD1: the function take one parameter
+ * int (int): the return type is 'int' and the parameter is also 'int' type
+ * 
+ */
 class XDevMock
 {
 public:
     virtual ~XDevMock(){}
-    /**
-     * MOCK_METHOD1: the function take one parameter
-     * int (int): the return type is 'int' and the parameter is also 'int' type
-     * 
-     */
+
+    /* mock api */
     MOCK_METHOD1(xdev_get_link_status, int (int));
 };
 
-/* GTest test fixture. Use for test case setup and tear down  */
-class TestFixture : public ::testing::Test
+/**
+ * XDevUnitTest
+ * 
+ * GTest test fixture and unit test class . Used for instanlize test class and
+ * test case setup and tear down  
+ * 
+ * @param _devMock pointer to test class, enable external access to test object
+ */
+class XDevUnitTest : public ::testing::Test
 {
 public:
-    TestFixture()
+    XDevUnitTest()
     {
         /* allocatet the mock object */
         _devMock.reset(new ::testing::NiceMock<XDevMock>());
     }
 
-    ~TestFixture()
+    ~XDevUnitTest()
     {
         /* free the mock object */
         _devMock.reset();
@@ -43,26 +54,20 @@ public:
 };
 
 /* make the class static member accessible to other function */
-std::unique_ptr<XDevMock>  TestFixture::_devMock;
+std::unique_ptr<XDevMock>  XDevUnitTest::_devMock;
 
 /* mock function */
 int xdev_get_link_status(int port)
 {
     int retval;
 
-    /* invoke GMock function */
-    retval = TestFixture::_devMock->xdev_get_link_status(port);
+    /* invoke GMock function through classs static member */
+    retval = XDevUnitTest::_devMock->xdev_get_link_status(port);
 
     return retval;
 }
 
-/* test class */
-class XDevUnitTest : public TestFixture
-{
-public:
-    XDevUnitTest() {}
-};
-
+/* test case 1 */
 TEST_F(XDevUnitTest, Port1)
 {
     /* 
@@ -79,6 +84,7 @@ TEST_F(XDevUnitTest, Port1)
     EXPECT_EQ(1, xdev_get_link_status(1));
 }
 
+/* test case 1 */
 TEST_F(XDevUnitTest, Port2)
 {
     /* 
