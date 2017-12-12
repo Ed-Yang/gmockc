@@ -1,4 +1,4 @@
-#include <memory.h>
+#include <memory> /* for gcc 4.9.2 */
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"

@@ -6,7 +6,17 @@ of the information is from Internet, I just leave a little comment for them.
 # Download and Install
 
 * [CMake](https://cmake.org/download/)
-* [GoogleTest](https://github.com/google/googletest)
+* [GTest/GMock](https://github.com/google/googletest)
+
+```
+$ git clone https://github.com/google/googletest.git
+$ cd googletest/
+$ mkdir build
+$ cd build/
+$ cmake ..
+$ make
+$ make install
+```
 
 [FindGMock.cmake](https://github.com/triglav/cmake-findgmock) is included in
 this repository.
@@ -14,7 +24,7 @@ this repository.
 # Build & Run (Linux & OSX)
 
 ```
-$ git clone <this-github-repo>
+$ git clone https://github.com/Ed-Yang/gmockc.git
 $ mkdir build
 $ cd build
 $ cmake ..
