@@ -15,7 +15,7 @@ $ mkdir build
 $ cd build/
 $ cmake ..
 $ make
-$ make install
+$ sudo make install
 ```
 
 [FindGMock.cmake](https://github.com/triglav/cmake-findgmock) is included in
