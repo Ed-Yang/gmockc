@@ -80,7 +80,7 @@ TEST_F(XDevUnitTest, Port1)
     /* test if 1st call is return 0 */
     EXPECT_EQ(0, xdev_get_link_status(1));
 
-    /* test if 2nd call is return 0 */
+    /* test if 2nd call is return 1 */
     EXPECT_EQ(1, xdev_get_link_status(1));
 }
 
